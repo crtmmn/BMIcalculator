@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BMIcalculator</string>
+    <string name="lbs_inches"><![CDATA[lbs & inches]]></string>
+    <string name="kg_cm"><![CDATA[kg & cm]]></string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="sports_whistle">Sports whistle</string>
+    <string name="calculate">Calculate</string>
+</resources>
