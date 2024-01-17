@@ -1,19 +1,24 @@
 package com.example.bmicalculator
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("UseSwitchCompatOrMaterialCode", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
+        val db = Firebase.firestore
         val uSwitch: Switch = findViewById(R.id.units_switch)
         val calcButton: Button = findViewById(R.id.calc_button)
         val summary: TextView = findViewById(R.id.summary_textView)
@@ -48,7 +53,6 @@ class MainActivity : AppCompatActivity() {
             }
             return "Error"
         }
-
         uSwitch.setOnClickListener {
             ustext.background = null
             metrictext.background = null
@@ -59,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                 metrictext.setBackgroundResource(R.drawable.edittextstyle)
             }
         }
-
         calcButton.setOnClickListener {
             if(uSwitch.isChecked) {
                 val height: TextView = findViewById(R.id.height_editTextNumber)
@@ -73,6 +76,12 @@ class MainActivity : AppCompatActivity() {
                     val result: TextView = findViewById(R.id.result_textView)
                     result.text = "Your BMI is: ${roundedBMI.toString()}"
                     summary.text = checkBMI(roundedBMI)
+                    val data = hashMapOf(
+                        "BMI" to roundedBMI.toString(),
+                        "summary" to checkBMI(roundedBMI)
+                    )
+                    db.collection("bmidata")
+                        .add(data)
                 }
                 else {
                     val result: TextView = findViewById(R.id.result_textView)
@@ -94,6 +103,12 @@ class MainActivity : AppCompatActivity() {
                     val result: TextView = findViewById(R.id.result_textView)
                     result.text = "Your BMI is: ${roundedBMI.toString()}"
                     summary.text = checkBMI(roundedBMI)
+                    val data = hashMapOf(
+                        "BMI" to roundedBMI.toString(),
+                        "summary" to checkBMI(roundedBMI)
+                    )
+                    db.collection("bmidata")
+                        .add(data)
                 }
                 else {
                     val result: TextView = findViewById(R.id.result_textView)
